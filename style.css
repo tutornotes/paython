@@ -1,0 +1,217 @@
+/* SC-401 Repository — Dark, documentation-style theme
+   Basic, robust CSS only. No JavaScript required.
+*/
+
+:root {
+  /* Palette inspired by code editors and docs sites */
+  --bg: #0f1117;
+  --panel: #161b22;
+  --border: #262b36;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #3fb950;    /* subtle green accent */
+  --accent-weak: #2ea043;
+  --link: #79c0ff;      /* doc-like link color */
+  --link-hover: #a5d6ff;
+
+  --radius: 10px;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: radial-gradient(1200px 800px at 20% -10%, #0f1423 0%, var(--bg) 40%) fixed;
+  font: 14px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Containers */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0) 60%);
+}
+
+.title {
+  margin: 28px 0 6px;
+  font-size: 24px;
+  letter-spacing: 0.2px;
+}
+
+.subtitle {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Panel */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 28px 0 18px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.panel-head {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Table */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.file-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px; /* keep columns readable on very narrow screens */
+}
+
+.file-table th,
+.file-table td {
+  padding: 12px 16px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.file-table thead th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, #141923, #14192300);
+  z-index: 1;
+}
+
+.file-table tbody tr {
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.file-table tbody tr:last-child {
+  border-bottom: 0;
+}
+
+.file-table tbody tr:hover {
+  background: rgba(127, 179, 80, 0.06);
+}
+
+.col-size {
+  width: 120px;
+}
+
+.col-date {
+  width: 160px;
+}
+
+/* Links styled like editor tokens */
+.file-link {
+  color: var(--link);
+  text-decoration: none;
+  position: relative;
+  padding-left: 26px; /* room for the pseudo icon */
+  transition: color 0.15s ease-in-out;
+}
+
+.file-link:hover,
+.file-link:focus {
+  color: var(--link-hover);
+  outline: none;
+}
+
+.file-link::before {
+  content: "py";
+  display: inline-grid;
+  place-items: center;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 18px;
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  color: #0b1115;
+  background: linear-gradient(180deg, #ffd44d, #ffb300);
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Hint */
+.hint {
+  margin: 12px 16px 16px;
+  font-size: 12px;
+  border-left: 2px solid var(--accent);
+  padding-left: 10px;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 18px 0 28px;
+  background: linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0) 60%);
+}
+
+/* Focus ring for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* High-contrast tweak for prefers-contrast users, where supported */
+@media (prefers-contrast: more) {
+  .file-table tbody tr:hover {
+    background: rgba(63, 185, 80, 0.18);
+  }
+  :focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* Small screens */
+@media (max-width: 560px) {
+  .title {
+    font-size: 20px;
+  }
+  .subtitle {
+    font-size: 12px;
+  }
+}
