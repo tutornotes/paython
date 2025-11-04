@@ -3,95 +3,421 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="dark light">
-  <title>SC-401 Repository</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Python Home</title>
+  <meta name="description" content="An original, professional single-page site layout with two-tier navigation, search, and sidebar." />
+  <style>
+    :root{
+      --brand-dark:#15273b;
+      --brand:#1d3b5a;
+      --brand-gradient-start:#265781;
+      --brand-gradient-end:#15273b;
+      --brand-contrast:#ffffff;
+      --accent:#ff7a1a;
+      --accent-contrast:#111318;
+      --bg:#ffffff;
+      --text:#17202a;
+      --muted:#5c6b7a;
+      --border:#e2e8f0;
+      --sidebar-bg:#2a4b6d;
+      --sidebar-text:#ffffff;
+      --link:#1f6feb;
+      --link-hover:#1158c7;
+      --focus:#56a0ff;
+      --chip-bg:#f3f4f6;
+    }
+
+    /* Base */
+    html,body{
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:var(--text);
+      font:16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      text-rendering:optimizeLegibility;
+    }
+
+    a{ color:var(--link); text-decoration:none; }
+    a:hover{ color:var(--link-hover); text-decoration:underline; }
+    img{ max-width:100%; height:auto; }
+    .container{ width:min(1160px, 92%); margin-inline:auto; }
+
+    /* Top header (brand bar) */
+    .site-header{
+      background:linear-gradient(180deg, var(--brand-gradient-start), var(--brand-gradient-end));
+      color:var(--brand-contrast);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+    .site-header .bar{
+      display:flex;
+      align-items:center;
+      gap:24px;
+      padding:14px 0;
+    }
+
+    /* Logo + title */
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .logo{
+      width:36px;
+      height:36px;
+      border-radius:8px;
+      background:
+        radial-gradient(80% 80% at 30% 30%, #79c2ff 0%, #2a7fbd 60%, transparent 61%) top left/60% 60% no-repeat,
+        radial-gradient(80% 80% at 70% 70%, #ffd280 0%, #ff9d32 60%, transparent 61%) bottom right/60% 60% no-repeat,
+        linear-gradient(135deg, #4aa3df, #ff8f3f);
+      box-shadow:0 2px 10px rgba(0,0,0,0.2) inset, 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .brand .title{
+      font-weight:700;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+
+    /* Header actions: donate, socialize, search */
+    .header-actions{
+      margin-left:auto;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .donate{
+      background:var(--accent);
+      color:var(--brand-contrast);
+      padding:8px 12px;
+      border-radius:6px;
+      font-weight:600;
+      border:none;
+      cursor:pointer;
+      box-shadow:0 2px 0 rgba(0,0,0,0.12);
+    }
+    .donate:hover{ filter:brightness(0.96); }
+    .socialize{
+      color:#d6e3f2;
+      font-size:14px;
+    }
+    .search{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background:rgba(255,255,255,0.1);
+      padding:6px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.15);
+    }
+    .search input{
+      background:transparent;
+      color:#eef6ff;
+      border:none;
+      outline:none;
+      width:210px;
+      padding:8px 10px;
+      border-radius:6px;
+    }
+    .search input::placeholder{ color:#c5d6e8; }
+    .search button{
+      background:#f0f4f8;
+      color:#0b1522;
+      border:none;
+      padding:8px 12px;
+      border-radius:6px;
+      font-weight:700;
+      letter-spacing:.3px;
+      cursor:pointer;
+    }
+    .search button:hover{ background:#e4ebf2; }
+
+    /* Secondary navigation */
+    .secondary-nav{
+      background:var(--brand);
+      border-top:1px solid rgba(255,255,255,0.06);
+      border-bottom:1px solid rgba(0,0,0,0.15);
+    }
+    .secondary-nav .tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      padding:8px 0;
+    }
+    .tab{
+      color:#eaf2fb;
+      padding:10px 12px;
+      border-radius:6px;
+      font-weight:600;
+    }
+    .tab:hover{
+      background:rgba(255,255,255,0.08);
+      text-decoration:none;
+    }
+    .tab.active{
+      background:#0f2740;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    /* Layout */
+    .main{
+      padding:28px 0 40px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 300px 1fr;
+      gap:28px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    /* Sidebar info box */
+    .info-box{
+      background:var(--sidebar-bg);
+      color:var(--sidebar-text);
+      border-radius:10px;
+      padding:18px 18px 8px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    }
+    .info-box h2{
+      margin:0 0 8px 0;
+      font-size:18px;
+      line-height:1.2;
+    }
+    .info-box p{
+      margin:0 0 12px 0;
+      color:#e7eef6;
+    }
+    .info-box .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:12px 0 6px;
+    }
+    .chip{
+      background:rgba(255,255,255,0.12);
+      color:#f4f9ff;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid rgba(255,255,255,0.18);
+    }
+
+    /* Content */
+    .content article{
+      background:#ffffff;
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:22px;
+      box-shadow:0 2px 8px rgba(16,24,40,0.04);
+    }
+    h1{
+      margin:0 0 10px 0;
+      font-size:28px;
+      line-height:1.2;
+      letter-spacing:.2px;
+    }
+    .lead{
+      color:var(--muted);
+      margin:0 0 16px 0;
+    }
+    h3{
+      margin:22px 0 8px;
+      font-size:18px;
+    }
+    ul{ padding-left:20px; }
+    .muted{
+      color:var(--muted);
+    }
+
+    /* Visible Downloads section */
+    .downloads{
+      margin-top:28px;
+      background:#ffffff;
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:22px;
+      box-shadow:0 2px 8px rgba(16,24,40,0.04);
+    }
+    .downloads h2{
+      margin:0 0 12px 0;
+      font-size:22px;
+    }
+    .download-list{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap:10px 16px;
+      list-style:disc;
+    }
+    .download-list li a{
+      font-weight:600;
+    }
+
+    /* Footer */
+    .site-footer{
+      border-top:1px solid var(--border);
+      background:#fafbfc;
+      color:#26323f;
+      padding:20px 0;
+      font-size:14px;
+    }
+    .site-footer .columns{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:20px;
+    }
+    @media (max-width: 800px){
+      .site-footer .columns{ grid-template-columns: 1fr; }
+    }
+
+    /* Completely hidden downloads list (kept for compatibility) */
+    .supplemental{
+      position:relative;
+    }
+    .hidden-downloads{
+      position:absolute !important;
+      left:-10000px !important;
+      top:auto !important;
+      width:1px !important;
+      height:1px !important;
+      overflow:hidden !important;
+      clip:rect(1px, 1px, 1px, 1px) !important;
+      clip-path:inset(50%) !important;
+      white-space:nowrap !important;
+      border:0 !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+
+    /* Focus styles */
+    :focus{ outline:none; }
+    :focus-visible{
+      outline:3px solid var(--focus);
+      outline-offset:2px;
+      border-radius:6px;
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="title">SC-401 Practical Files.</h1>
-      <p class="subtitle">A minimal, dark, documentation-style index for downloadable Python practicals.</p>
+  <header class="site-header" role="banner">
+    <div class="container bar">
+      <div class="brand" aria-label="Site branding">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">Python Home</div>
+      </div>
+      <nav class="header-actions" aria-label="Header actions">
+        <button class="donate" type="button">Donate</button>
+        <div class="socialize">Socialize</div>
+        <form class="search" role="search" aria-label="Site search" action="#" method="get">
+          <input name="q" type="search" placeholder="Search" aria-label="Search" />
+          <button type="submit">GO</button>
+        </form>
+      </nav>
     </div>
+    <nav class="secondary-nav" aria-label="Primary">
+      <div class="container">
+        <div class="tabs" role="tablist">
+          <a class="tab active" href="#" role="tab" aria-selected="true">About</a>
+          <a class="tab" href="#" role="tab">Downloads</a>
+          <a class="tab" href="#" role="tab">Documentation</a>
+          <a class="tab" href="#" role="tab">Community</a>
+          <a class="tab" href="#" role="tab">Success Stories</a>
+          <a class="tab" href="#" role="tab">News</a>
+          <a class="tab" href="#" role="tab">Events</a>
+        </div>
+      </div>
+    </nav>
   </header>
 
-  <main class="container">
-    <section class="panel">
-      <div class="panel-head">
-        <h2 class="panel-title" aria-label="File Directory">/practicals</h2>
-      </div>
+  <main class="main container" role="main">
+    <div class="grid">
+      <aside class="info-box" aria-label="Foundation information">
+        <h2>The Foundation</h2>
+        <p>We steward the project, support community initiatives, and foster an inclusive ecosystem.</p>
+        <div class="chips">
+          <span class="chip">Grants</span>
+          <span class="chip">Governance</span>
+          <span class="chip">Membership</span>
+          <span class="chip">Code of Conduct</span>
+        </div>
+      </aside>
 
-      <div class="table-wrap" role="region" aria-label="SC-401 Practical Files Table" tabindex="0">
-        <table class="file-table">
-          <thead>
-            <tr>
-              <th scope="col">Filename</th>
-              <th scope="col" class="col-size">Size</th>
-              <th scope="col" class="col-date">Last Commit</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="bam.py" download>bam.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="cartesian.py" download>cartesian.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="demorgan.py" download>demorgan.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="hamming.py" download>hamming.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="hebb.py" download>hebb.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="kohonen.py" download>kohonen.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="maxnet.py" download>maxnet.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="minmax.py" download>minmax.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="mpneuron.py" download>mpneuron.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-            <tr>
-              <td data-label="Filename"><a class="file-link" href="unionintersect.py" download>unionintersect.py</a></td>
-              <td data-label="Size" class="muted">1 KB</td>
-              <td data-label="Last Commit" class="muted">2025-11-02</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <section class="content">
+        <article>
+          <h1>Welcome to Your Project</h1>
+          <p class="lead">A clean, professional single‑page layout with a familiar, two‑tier navigation, search, and a left‑hand info panel.</p>
+          <p>This template is designed for GitHub Pages and ships as a single HTML file with embedded CSS. Customize the navigation, content, and sidebar to match your needs, while maintaining a clear and accessible design.</p>
 
-      <p class="hint muted" role="note">Tip: Click a filename to download the Python file directly.</p>
+          <h3>Quick Start</h3>
+          <ul>
+            <li>Edit the navigation labels and links to point to your content.</li>
+            <li>Replace the “Project Home” branding with your own name and logo.</li>
+            <li>Publish as index.html in your GitHub Pages repository.</li>
+          </ul>
+
+          <p class="muted">Tip: Keep copy succinct, use descriptive headings, and favor clear actions.</p>
+        </article>
+      </section>
+    </div>
+
+    <!-- Visible downloads list at the end of the main content -->
+    <section class="downloads" aria-labelledby="downloads-title">
+      <h2 id="downloads-title">Downloads</h2>
+      <ul class="download-list">
+        <li><a href="bam.py" download>bam.py</a></li>
+        <li><a href="cartesian.py" download>cartesian.py</a></li>
+        <li><a href="demorgan.py" download>demorgan.py</a></li>
+        <li><a href="hamming.py" download>hamming.py</a></li>
+        <li><a href="hebb.py" download>hebb.py</a></li>
+        <li><a href="kohonen.py" download>kohonen.py</a></li>
+        <li><a href="maxnet.py" download>maxnet.py</a></li>
+        <li><a href="minmax.py" download>minmax.py</a></li>
+        <li><a href="mpneuron.py" download>mpneuron.py</a></li>
+        <li><a href="unionintersect.py" download>unionintersect.py</a></li>
+      </ul>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" role="contentinfo">
     <div class="container">
-      <small class="muted">SC-401 Repository • Static index for GitHub Pages • Monospace theme</small>
+      <div class="columns">
+        <div>
+          <strong>Project</strong>
+          <p class="muted">Open, welcoming, and easy to start with.</p>
+        </div>
+        <div>
+          <strong>Resources</strong>
+          <ul>
+            <li><a href="#">Get Started</a></li>
+            <li><a href="#">Guides</a></li>
+            <li><a href="#">API Reference</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>Community</strong>
+          <ul>
+            <li><a href="#">Forum</a></li>
+            <li><a href="#">Chat</a></li>
+            <li><a href="#">Events</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Hidden supplemental area (not visible on the rendered page) -->
+      <section class="supplemental" aria-hidden="true">
+        <ul class="hidden-downloads" hidden>
+          <li><a href="bam.py" download>bam.py</a></li>
+          <li><a href="cartesian.py" download>cartesian.py</a></li>
+          <li><a href="demorgan.py" download>demorgan.py</a></li>
+          <li><a href="hamming.py" download>hamming.py</a></li>
+          <li><a href="hebb.py" download>hebb.py</a></li>
+          <li><a href="kohonen.py" download>kohonen.py</a></li>
+          <li><a href="maxnet.py" download>maxnet.py</a></li>
+          <li><a href="minmax.py" download>minmax.py</a></li>
+          <li><a href="mpneuron.py" download>mpneuron.py</a></li>
+          <li><a href="unionintersect.py" download>unionintersect.py</a></li>
+        </ul>
+      </section>
     </div>
   </footer>
 </body>
